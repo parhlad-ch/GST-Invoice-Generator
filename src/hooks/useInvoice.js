@@ -11,14 +11,13 @@ const makeItem = (id) => ({ id, name: "", qty: 1, price: "", gst: 18 });
  * @returns {InvoiceHookReturn} Invoice state and methods
  */
 export function useInvoice() {
-  const [isClient, setIsClient] = useState(false);
   const [invoiceNo, setInvoiceNo] = useState("");
   const [date, setDate] = useState("");
   const [dueDate, setDueDate] = useState("");
 
   // Initialize dates and invoice number only on client to avoid hydration mismatch
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => {
-    setIsClient(true);
     setInvoiceNo(genInvoiceNo());
     setDate(fmtDate());
     setDueDate(fmtDate(addDays(new Date(), 30)));

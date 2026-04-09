@@ -109,7 +109,7 @@ export interface InvoiceNotes {
 // ─────────────────────────────────────────────────────────────────────
 
 export type UpdateField<T> = <K extends keyof T>(field: K, value: T[K]) => void;
-export type UpdateItemField = (id: number, field: keyof InvoiceItem, value: any) => void;
+export type UpdateItemField = (id: number, field: keyof InvoiceItem, value: InvoiceItem[keyof InvoiceItem]) => void;
 export type RemoveItem = (id: number) => void;
 export type AddItem = () => void;
 
