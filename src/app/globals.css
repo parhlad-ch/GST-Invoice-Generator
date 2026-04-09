@@ -1,26 +1,272 @@
 @import "tailwindcss";
 
+/* ── Design tokens ── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Brand */
+  --primary:        #2563eb;
+  --primary-hover:  #1d4ed8;
+  --primary-light:  #eff6ff;
+  --primary-border: #bfdbfe;
+
+  --success:        #16a34a;
+  --success-hover:  #15803d;
+  --success-light:  #f0fdf4;
+  --success-border: #bbf7d0;
+
+  --danger:         #dc2626;
+  --danger-hover:   #b91c1c;
+  --danger-light:   #fef2f2;
+  --danger-border:  #fecaca;
+
+  --warning:        #d97706;
+  --warning-light:  #fffbeb;
+  --warning-border: #fde68a;
+
+  /* Surfaces */
+  --bg:         #f8fafc;
+  --surface:    #ffffff;
+  --surface-2:  #f8fafc;
+  --surface-3:  #f1f5f9;
+
+  /* Text */
+  --ink:   #0f172a;
+  --ink-2: #475569;
+  --ink-3: #94a3b8;
+
+  /* Borders */
+  --border:        #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  /* Radii */
+  --radius:    10px;
+  --radius-sm: 8px;
+  --radius-lg: 14px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --shadow:    0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.04);
+
+  /* Backward-compat aliases */
+  --accent:       var(--primary);
+  --accent-light: var(--primary-light);
+  --accent-dark:  var(--primary-hover);
+  --green:        var(--success);
+  --green-light:  var(--success-light);
+  --red:          var(--danger);
+  --red-light:    var(--danger-light);
+  --amber:        var(--warning);
+  --amber-light:  var(--warning-light);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ── Base ── */
+body {
+  font-family: var(--font-open-sans, 'Open Sans'), sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 14px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ── Monospace numbers ── */
+.mono {
+  font-family: var(--font-dm-mono, 'DM Mono'), monospace;
+}
+
+/* ────────────────────────────────────────────────────────
+   COMPONENT LAYER
+   ──────────────────────────────────────────────────────── */
+@layer components {
+
+  /* ── Form field input ── */
+  .field-input {
+    @apply w-full px-3 py-2.5 text-sm border border-slate-200 rounded-lg bg-white text-slate-900 outline-none transition-all duration-200 placeholder-slate-400;
+  }
+  .field-input:focus {
+    @apply border-blue-500 ring-2 ring-blue-100;
+  }
+
+  /* ── Form label ── */
+  .field-label {
+    @apply block text-xs font-semibold text-slate-600 mb-1.5;
+  }
+
+  /* ── Section heading ── */
+  .section-heading {
+    @apply text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2;
+  }
+
+  /* ── Card ── */
+  .card {
+    @apply bg-white border border-slate-100 rounded-2xl shadow-sm transition-all duration-300;
+  }
+  .card-hover {
+    @apply hover:shadow-md hover:border-slate-200;
+  }
+
+  /* ── Buttons ── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer select-none border-0 outline-none;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer select-none outline-none bg-blue-600 text-white hover:bg-blue-700 shadow-sm hover:shadow-md;
+    border: 0;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer select-none outline-none bg-white text-slate-700 border border-slate-200 hover:bg-slate-50 hover:border-slate-300;
+  }
+  .btn-success {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer select-none outline-none bg-green-600 text-white hover:bg-green-700 shadow-sm hover:shadow-md;
+    border: 0;
+  }
+  .btn-danger-outline {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer select-none outline-none bg-transparent text-red-600 border border-red-200 hover:bg-red-600 hover:text-white;
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 cursor-pointer select-none outline-none bg-transparent text-blue-600 border border-blue-200 hover:bg-blue-50;
+  }
+
+  /* ── Form section wrapper ── */
+  .form-section {
+    @apply rounded-xl border border-slate-100 bg-white overflow-hidden;
+  }
+  .form-section-header {
+    @apply px-4 py-3 bg-slate-50 border-b border-slate-100 flex items-center gap-2.5;
+  }
+  .form-section-body {
+    @apply p-4;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ── Bootstrap form override — consistent look with field-input ── */
+.form-control,
+.form-select {
+  font-family: var(--font-open-sans, 'Open Sans'), sans-serif !important;
+  font-size: 14px !important;
+  border-color: var(--border) !important;
+  border-radius: var(--radius-sm) !important;
+  padding: 10px 14px !important;
+  background-color: white !important;
+  color: var(--ink) !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12) !important;
+  outline: none !important;
+}
+
+/* ── Print / PDF ── */
+@page {
+  size: A4 portrait;
+  margin: 0;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .row {
+    display: block !important;
+  }
+
+  .print-area {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .print-area > div {
+    position: static !important;
+    background: #fff !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #invoice-preview {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #ffffff !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+    padding: 12mm !important;
+    box-sizing: border-box !important;
+  }
+
+  #invoice-preview * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  #invoice-preview input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+  }
+
+  #invoice-preview table { break-inside: avoid !important; }
+  #invoice-preview tr,
+  #invoice-preview td,
+  #invoice-preview th  { break-inside: avoid !important; }
+}
+
+/* ── Misc ── */
+.remove-bg:hover { color: #000 !important; }
+
+input[type="date"] { color-scheme: light; }
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+/* ── Animations ── */
+@keyframes slideInRight {
+  from { transform: translateX(120px); opacity: 0; }
+  to   { transform: translateX(0);     opacity: 1; }
+}
+.animate-slide-in { animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+
+/* ── Hide preview column on mobile (screen only — visible on print) ── */
+@media screen and (max-width: 991px) {
+  .preview-col {
+    display: none;
+  }
+}
+
+/* ── Mobile responsive helpers ── */
+@media (max-width: 991px) {
+  .col-lg-6 {
+    max-width: 100%;
+    flex: 0 0 100%;
+  }
+  .card .mobile-p {
+   padding: 1.5rem !important;
+   } 
+   .card input, .card textarea{
+    font-size: 12px !important;
+   }
 }
