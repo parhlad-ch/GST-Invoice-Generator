@@ -211,7 +211,7 @@ export default function InvoiceForm({
                     <input
                       type="tel"
                       className="field-input"
-                      placeholder="+91 98765 43210"
+                      placeholder="+91 12345 67890"
                       value={seller?.phone || ""}
                       onChange={(e) => updateSeller("phone", e.target.value)}
                     />
